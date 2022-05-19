@@ -20,24 +20,35 @@
 // HideAll - calls Hide on a segment and on each segment after it
 // MoveTo (x : int, y : int) - moves a segment to specified position, and then calls recursively Move on follower
 
+#include <ncurses.h>
+
 class SnakeSegment {
-private:
+protected:
     int x;
     int y;
     SnakeSegment *follower = nullptr;
+    WINDOW* window;
 public:
-    SnakeSegment(int x, int y, int length);
-    virtual void Draw();
+    SnakeSegment(int x, int y, int length = 5, WINDOW *window = stdscr);
+    virtual void draw();
     void Hide();
     void DrawAll();
     void HideAll();
-    void MoveTo(int x, int y);
+    virtual void MoveTo(int x, int y);
+    int getX();
+    int getY();
+    virtual ~SnakeSegment();
 };
 
 class SnakeHeadSegment : public SnakeSegment
 {
+private:
+    bool _isDead = false;
 public:
-    SnakeHeadSegment(int x, int y, int length) : SnakeSegment(x, y, length){};
-    void Draw();
+    SnakeHeadSegment(int x, int y, int length, WINDOW* w) : SnakeSegment(x, y, length, w){};
+    void draw() override;
+    void MoveTo(int x, int y) override;
+    bool isDead();
+    void Kill();
 };
 #endif //CONSOLESNAKE_SNAKESEGMENT_H
