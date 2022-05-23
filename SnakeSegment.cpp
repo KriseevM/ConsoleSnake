@@ -3,6 +3,7 @@
 //
 
 #include "SnakeSegment.h"
+#include "GameColors.h"
 
 SnakeSegment::SnakeSegment(int x, int y, int length, WINDOW *window) : x(x), y(y) {
     if(length <= 1)
@@ -45,7 +46,9 @@ void SnakeSegment::MoveTo(int newX, int newY) {
 
 void SnakeSegment::draw() {
     wmove(window, this->y, this->x);
+    wattron(window, COLOR_PAIR(GameColors::SnakePair));
     waddch(window, 'o'|A_NORMAL);
+    wattroff(window, COLOR_PAIR(GameColors::SnakePair));
 }
 void SnakeSegment::Hide() {
     wmove(window, this->y, this->x);
