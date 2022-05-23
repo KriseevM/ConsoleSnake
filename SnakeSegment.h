@@ -37,6 +37,7 @@ public:
     virtual void MoveTo(int x, int y);
     int getX();
     int getY();
+    void Grow();
     virtual ~SnakeSegment();
 };
 

@@ -83,7 +83,19 @@ void SnakeHeadSegment::MoveTo(int newX, int newY) {
     SnakeSegment::MoveTo(newX, newY);
 }
 
+void SnakeSegment::Grow() {
+    if(follower == nullptr)
+    {
+        follower = new  SnakeSegment(this->x, this->y, 0, window);
+    }
+    else
+    {
+        follower->Grow();
+    }
+}
+
 SnakeSegment::~SnakeSegment() {
-    delete follower;
+    if(follower != nullptr)
+        delete follower;
 }
 
