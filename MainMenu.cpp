@@ -10,8 +10,8 @@ MenuResult MainMenu::Show()
 {
     wattron(menuWindow, A_STANDOUT);
     wattron(menuWindow, COLOR_PAIR(GameColors::MenuWindowPair));
-    wbkgd(menuWindow, COLOR_PAIR(GameColors::MenuWindowPair));
     wclear(menuWindow);
+    wbkgd(menuWindow, COLOR_PAIR(GameColors::MenuWindowPair));
     box(this->menuWindow, 0, 0);
     wattroff(menuWindow, A_STANDOUT);
     wattroff(menuWindow, COLOR_PAIR(GameColors::MenuWindowPair));
