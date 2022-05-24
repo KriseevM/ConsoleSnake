@@ -1,9 +1,6 @@
 #include <ncurses.h>
-#include <vector>
-#include <string>
-#include "MainMenu.h"
+#include "GameRunner.h"
 #include "GameColors.h"
-#include <thread>
 #include <iostream>
 
 int main() {
@@ -21,18 +18,9 @@ int main() {
         std::cerr << "Window size must be at least 10 rows and 30 columns" << std::endl;
         return -1;
     }
-    MainMenu *menu = new MainMenu(20, 7);
-    auto s = menu->Show();
-    delete menu;
+    GameRunner *runner = new GameRunner();
+    runner->Run();
+    delete runner;
     endwin();
-    switch(s)
-    {
-        case MENU_PLAY:
-            std::cout << "Playing" << std::endl;
-            break;
-        case MENU_QUIT:
-            std::cout << "Quitting" << std::endl;
-            break;
-    }
     return 0;
 }
