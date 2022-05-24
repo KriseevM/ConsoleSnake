@@ -6,32 +6,22 @@
 #include "GameColors.h"
 
 SnakeSegment::SnakeSegment(int x, int y, int length, WINDOW *window) : x(x), y(y) {
-    if(length <= 1)
-    {
-        follower = nullptr;
-        return;
-    }
+
     this->window = window;
-    follower = new SnakeSegment(x-1, y, length - 1, window);
+    follower = length <= 1 ? nullptr : new SnakeSegment(x-1, y, length - 1, window);
 }
 
 void SnakeSegment::DrawAll() {
-    auto ref = this->follower;
-    while(ref != nullptr)
-    {
-        ref->draw();
-        ref = ref->follower;
+    if(follower != nullptr){
+        follower->DrawAll();
     }
     this->draw();
 }
 
 void SnakeSegment::HideAll() {
     this->Hide();
-    auto ref = this->follower;
-    while(ref != nullptr)
-    {
-        ref->Hide();
-        ref = ref->follower;
+    if(follower != nullptr){
+        follower->HideAll();
     }
 }
 
@@ -59,6 +49,10 @@ int SnakeSegment::getX() {
     return this->x;
 }
 
+SnakeSegment *SnakeSegment::getFollower() {
+    return this->follower;
+}
+
 int SnakeSegment::getY() {
     return this->y;
 }
@@ -70,15 +64,25 @@ bool SnakeHeadSegment::isDead() {
 
 void SnakeHeadSegment::draw() {
     wmove(window, this->y, this->x);
-    waddch(window, (_isDead ? 'X' : 'O')|A_NORMAL);
-
+    wattron(window, COLOR_PAIR(GameColors::SnakePair));
+    waddch(window, (_isDead ? 'x' : 'O')|A_NORMAL);
+    wattroff(window, COLOR_PAIR(GameColors::SnakePair));
 }
 
 void SnakeHeadSegment::MoveTo(int newX, int newY) {
-    if(newX >= getmaxx(window) || newY >= getmaxy(window))
+    if(newX + 1 >= getmaxx(window) || newY + 1 >= getmaxy(window) || newX <= 0 || newY <= 0)
     {
         _isDead = true;
         return;
+    }
+    auto ref = this->follower;
+    while(ref != nullptr) {
+        if(ref->getX() == this->x && ref->getY() == this->y)
+        {
+            _isDead = true;
+            return;
+        }
+        ref = ref->getFollower();
     }
     SnakeSegment::MoveTo(newX, newY);
 }

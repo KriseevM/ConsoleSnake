@@ -38,6 +38,7 @@ public:
     int getX();
     int getY();
     void Grow();
+    SnakeSegment *getFollower();
     virtual ~SnakeSegment();
 };
 
