@@ -1,5 +1,7 @@
 #include "MainMenu.h"
 #include "GameColors.h"
+
+
 MainMenu::MainMenu(int width, int height) : winWidth(width), winHeight(height)
 {
     this->menuWindow = newwin(height, width, (getmaxy(stdscr) - height) / 2, (getmaxx(stdscr) - width) / 2);
@@ -15,6 +17,7 @@ MenuResult MainMenu::Show()
     box(this->menuWindow, 0, 0);
     wattroff(menuWindow, A_STANDOUT);
     wattroff(menuWindow, COLOR_PAIR(GameColors::MenuWindowPair));
+    mvwprintw(menuWindow, 1, 2, "Console Snake");
     size_t selectedIndex = 0;
     int c;
     do {

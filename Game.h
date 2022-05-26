@@ -2,7 +2,7 @@
 #define GAME_H
 
 #include <ncurses.h>
-
+#include "SnakeSegment.h"
 class Game
 {
 public:
@@ -11,7 +11,7 @@ public:
     ~Game();
 private:
     void DrawFruit(int fruitX, int fruitY);
-    void PlaceFruit(int &x, int &y);
+    void PlaceFruit(int &x, int &y, SnakeHeadSegment *snake);
     enum Rotations { 
         ROT_NONE = -1,
         ROT_UP = 0, 

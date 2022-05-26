@@ -64,9 +64,9 @@ bool SnakeHeadSegment::isDead() {
 
 void SnakeHeadSegment::draw() {
     wmove(window, this->y, this->x);
-    wattron(window, COLOR_PAIR(GameColors::SnakePair));
+    wattron(window, COLOR_PAIR(GameColors::SnakeHeadPair));
     waddch(window, (_isDead ? 'x' : 'O')|A_NORMAL);
-    wattroff(window, COLOR_PAIR(GameColors::SnakePair));
+    wattroff(window, COLOR_PAIR(GameColors::SnakeHeadPair));
 }
 
 void SnakeHeadSegment::MoveTo(int newX, int newY) {

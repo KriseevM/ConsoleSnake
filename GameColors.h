@@ -13,6 +13,7 @@ static const short MenuWindowPair = 102;
 static const short SnakePair = 103;
 static const short FruitPair = 104;
 static const short GameFieldPair = 105;
+static const short SnakeHeadPair = 106;
 };
 
 #endif

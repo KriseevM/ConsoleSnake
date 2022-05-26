@@ -9,4 +9,5 @@ void GameColors::initialize()
     init_pair(GameColors::GameFieldPair, COLOR_WHITE, COLOR_GREEN);
     init_pair(GameColors::SnakePair, COLOR_WHITE, COLOR_GREEN);
     init_pair(GameColors::FruitPair, COLOR_RED, COLOR_GREEN);
+    init_pair(GameColors::SnakeHeadPair, COLOR_BLUE, COLOR_GREEN);
 }

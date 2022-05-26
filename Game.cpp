@@ -31,7 +31,7 @@ int Game::Play()
     auto head = new SnakeHeadSegment(snakeX, snakeY, initLength, gameWindow);
     head->DrawAll();
     wrefresh(gameWindow);
-    PlaceFruit(fruitX, fruitY);
+    PlaceFruit(fruitX, fruitY, head);
     auto delay = 200ms;
     while(!head->isDead())
     {
@@ -62,7 +62,7 @@ int Game::Play()
         if(head->getX() == fruitX && head->getY() == fruitY)
         {
             ++score;
-            PlaceFruit(fruitX, fruitY);
+            PlaceFruit(fruitX, fruitY, head);
             head->Grow();
             if(score % 10 == 0)
             {
@@ -80,14 +80,20 @@ int Game::Play()
     return score;
 }
 
-void Game::PlaceFruit(int &fruitX, int &fruitY)
+void Game::PlaceFruit(int &fruitX, int &fruitY, SnakeHeadSegment *snake)
 {
-    char charThere;
+    bool isSnakeThere = false;
     do {
         fruitX = rand() % (getmaxx(gameWindow) - 6) + 3;
         fruitY = rand() % (getmaxy(gameWindow) - 6) + 3;
-        charThere = mvwinch(gameWindow, fruitX, fruitY) & A_CHARTEXT;
-    } while(charThere == 'O' || charThere == 'o');
+        isSnakeThere = snake->getX() == fruitX && snake->getY() == fruitY;
+        auto ref = snake->getFollower();
+        while(!isSnakeThere && ref != nullptr)
+        {
+            isSnakeThere = isSnakeThere || (ref->getX() == fruitX && ref->getY() == fruitY);
+            ref = ref->getFollower();
+        }
+    } while(isSnakeThere);
 }
 void Game::DrawFruit(int fruitX, int fruitY)
 {
